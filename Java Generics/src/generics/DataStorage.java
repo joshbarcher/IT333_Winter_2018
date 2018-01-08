@@ -1,6 +1,9 @@
 package generics;
 
-public class DataStorage<T>
+import wildcards.IColorable;
+import wildcards.Shape;
+
+public class DataStorage<T extends Shape & IColorable>
 {
     private T data;
 
