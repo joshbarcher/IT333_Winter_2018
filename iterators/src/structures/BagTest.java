@@ -20,6 +20,10 @@ public class BagTest
         //this uses our iterator
         for (String word : words)
         {
+            //altering the data by adding an element (or otherwise
+            //making changes to the data) will result in a
+            //ConcurrentModificationException
+            //words.add("g");
             System.out.println(word);
         }
 
