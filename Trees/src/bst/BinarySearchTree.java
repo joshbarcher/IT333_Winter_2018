@@ -180,6 +180,60 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         return findMax(search.right);
     }
 
+    public void printTraversal(Traversal traversal)
+    {
+        switch (traversal)
+        {
+            case IN_ORDER:
+                inOrder(root);
+                System.out.println();
+                break;
+            case PRE_ORDER:
+                preOrder(root);
+                System.out.println();
+                break;
+            case POST_ORDER:
+                postOrder(root);
+                System.out.println();
+                break;
+            case BREADTH_FIRST:
+                break;
+        }
+    }
+
+    private void inOrder(Node current)
+    {
+        if (current != null)
+        {
+            //print the element and recursively search for others
+            inOrder(current.left);
+            System.out.print(current.data + " ");
+            inOrder(current.right);
+        }
+    }
+
+    private void preOrder(Node current)
+    {
+        if (current != null)
+        {
+            //print the element and recursively search for others
+            System.out.print(current.data + " ");
+            preOrder(current.left);
+            preOrder(current.right);
+        }
+    }
+
+    private void postOrder(Node current)
+    {
+        if (current != null)
+        {
+            //print the element and recursively search for others
+            postOrder(current.left);
+            postOrder(current.right);
+            System.out.print(current.data + " ");
+        }
+    }
+
     @Override
     public Iterator<T> iterator()
     {
