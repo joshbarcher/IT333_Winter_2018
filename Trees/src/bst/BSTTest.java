@@ -22,6 +22,9 @@ public class BSTTest
 
         System.out.print("Post order: ");
         bst.printTraversal(Traversal.POST_ORDER);
+
+        System.out.print("Breadth-first search: ");
+        bst.printTraversal(Traversal.BREADTH_FIRST);
     }
 
     private static void testRemove()

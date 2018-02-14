@@ -1,6 +1,8 @@
 package bst;
 
 import java.util.Iterator;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
 {
@@ -197,8 +199,33 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
                 System.out.println();
                 break;
             case BREADTH_FIRST:
+                breadthFirst();
                 break;
         }
+    }
+
+    private void breadthFirst()
+    {
+        Queue<Node> nodeQueue = new LinkedBlockingQueue<>();
+        nodeQueue.offer(root);
+
+        while (!nodeQueue.isEmpty())
+        {
+            Node nextNode = nodeQueue.poll();
+            System.out.print(nextNode.data + " ");
+
+            if (nextNode.left != null)
+            {
+                nodeQueue.offer(nextNode.left);
+            }
+
+            if (nextNode.right != null)
+            {
+                nodeQueue.offer(nextNode.right);
+            }
+        }
+
+        System.out.println();
     }
 
     private void inOrder(Node current)
