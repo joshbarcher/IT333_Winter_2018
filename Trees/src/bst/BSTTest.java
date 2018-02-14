@@ -1,5 +1,7 @@
 package bst;
 
+import java.util.Random;
+
 public class BSTTest
 {
     public static void main(String[] args)
@@ -25,6 +27,27 @@ public class BSTTest
 
         System.out.print("Breadth-first search: ");
         bst.printTraversal(Traversal.BREADTH_FIRST);
+
+        //test tree height or depth
+        int height = bst.getTreeHeight();
+        System.out.println("Tree height: " + height);
+
+        BinarySearchTree<Integer> randomTree = createRandomTree(1000000);
+        System.out.println("Elements added");
+        System.out.println("Random tree height: " + randomTree.getTreeHeight());
+    }
+
+    private static BinarySearchTree<Integer> createRandomTree(int numElementsToCreate)
+    {
+        Random random = new Random();
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+
+        for (int i = 1; i <= numElementsToCreate; i++)
+        {
+            bst.add(random.nextInt(numElementsToCreate) + 1);
+        }
+
+        return bst;
     }
 
     private static void testRemove()

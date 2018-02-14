@@ -261,6 +261,34 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         }
     }
 
+    public int getTreeHeight()
+    {
+        //make sure our nodes have updated height values
+        calculateAllNodeHeights();
+
+        return root.height;
+    }
+
+    public void calculateAllNodeHeights()
+    {
+        calculateNodeHeight(root);
+    }
+
+    private int calculateNodeHeight(Node current)
+    {
+        if (current == null)
+        {
+            return -1;
+        }
+        else
+        {
+            int height = 1 + Math.max(calculateNodeHeight(current.left),
+                                      calculateNodeHeight(current.right));
+            current.setHeight(height);
+            return height;
+        }
+    }
+
     @Override
     public Iterator<T> iterator()
     {
@@ -274,11 +302,35 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         private Node left;
         private Node right;
 
+        //scratch fields
+        private int height;
+        private int depth;
+
         public Node(T data, Node left, Node right)
         {
             this.data = data;
             this.left = left;
             this.right = right;
+        }
+
+        public int getHeight()
+        {
+            return height;
+        }
+
+        public void setHeight(int height)
+        {
+            this.height = height;
+        }
+
+        public int getDepth()
+        {
+            return depth;
+        }
+
+        public void setDepth(int depth)
+        {
+            this.depth = depth;
         }
 
         public T getData()
