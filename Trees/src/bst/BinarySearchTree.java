@@ -261,6 +261,38 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         }
     }
 
+    //return the sum from 1 to n
+    public int sum(int n)
+    {
+        if (n == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return n + sum(n - 1);
+        }
+    }
+
+    //calculate the total height of all nodes combined
+    public int totalNodeHeight()
+    {
+        calculateAllNodeHeights();
+
+        return totalNodeHeight(root);
+    }
+
+    private int totalNodeHeight(Node current)
+    {
+        if (current == null)
+        {
+            return 0;
+        }
+
+        return current.height + totalNodeHeight(current.left) +
+                                totalNodeHeight(current.right);
+    }
+
     public int getTreeHeight()
     {
         //make sure our nodes have updated height values
@@ -284,7 +316,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         {
             int height = 1 + Math.max(calculateNodeHeight(current.left),
                                       calculateNodeHeight(current.right));
-            current.setHeight(height);
+            current.height = height;
             return height;
         }
     }

@@ -32,9 +32,14 @@ public class BSTTest
         int height = bst.getTreeHeight();
         System.out.println("Tree height: " + height);
 
-        BinarySearchTree<Integer> randomTree = createRandomTree(1000000);
+        int numElements = 1000;
+        BinarySearchTree<Integer> randomTree = createRandomTree(numElements);
         System.out.println("Elements added");
         System.out.println("Random tree height: " + randomTree.getTreeHeight());
+
+        int totalHeight = randomTree.totalNodeHeight();
+        System.out.println("Total height: " + totalHeight);
+        System.out.println("Avg height: " + totalHeight * 1.0 / numElements);
     }
 
     private static BinarySearchTree<Integer> createRandomTree(int numElementsToCreate)
