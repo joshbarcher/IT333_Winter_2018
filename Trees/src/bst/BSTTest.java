@@ -32,7 +32,7 @@ public class BSTTest
         int height = bst.getTreeHeight();
         System.out.println("Tree height: " + height);
 
-        int numElements = 1000;
+        int numElements = 100;
         BinarySearchTree<Integer> randomTree = createRandomTree(numElements);
         System.out.println("Elements added");
         System.out.println("Random tree height: " + randomTree.getTreeHeight());
@@ -40,6 +40,20 @@ public class BSTTest
         int totalHeight = randomTree.totalNodeHeight();
         System.out.println("Total height: " + totalHeight);
         System.out.println("Avg height: " + totalHeight * 1.0 / numElements);
+
+        int totalDepth = randomTree.getTotalTreeDepth();
+        System.out.println("Total depth: " + totalDepth);
+        System.out.println("Avg depth: " + totalDepth * 1.0 / numElements);
+
+        //test using our iterator
+        int count = 0;
+        for (int num : randomTree)
+        {
+            count++;
+            System.out.println(num);
+        }
+
+        System.out.println("Count: " + count + ", size: " + randomTree.size());
     }
 
     private static BinarySearchTree<Integer> createRandomTree(int numElementsToCreate)

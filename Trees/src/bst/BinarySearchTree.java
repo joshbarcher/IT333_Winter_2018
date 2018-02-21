@@ -2,12 +2,13 @@ package bst;
 
 import java.util.Iterator;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
 {
-    protected Node root;
-    protected int nodeCount = 0;
+    private Node root;
+    private int size = 0;
 
     public BinarySearchTree()
     {
@@ -19,7 +20,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         if (root == null)
         {
             root = new Node(element, null, null);
-            nodeCount++;
+            size++;
             return true;
         }
         else
@@ -29,7 +30,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
 
             if (success)
             {
-                nodeCount++;
+                size++;
             }
             return success;
         }
@@ -182,6 +183,22 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         return findMax(search.right);
     }
 
+    public int size()
+    {
+        return size;
+    }
+
+    public boolean isEmpty()
+    {
+        return size == 0;
+    }
+
+    public void clear()
+    {
+        root = null;
+        size = 0;
+    }
+
     public void printTraversal(Traversal traversal)
     {
         switch (traversal)
@@ -321,14 +338,98 @@ public class BinarySearchTree<T extends Comparable<T>> implements Iterable<T>
         }
     }
 
+    //calculate the depth of nodes in the tree
+    public void calculateDepths()
+    {
+        calculateDepths(root, 0);
+    }
+
+    private void calculateDepths(Node current, int depth)
+    {
+        if (current == null)
+        {
+            return;
+        }
+
+        //assign the current nodes depth
+        current.setDepth(depth);
+
+        //look at child nodes, which are at a different depth
+        calculateDepths(current.left, depth + 1);
+        calculateDepths(current.right, depth + 1);
+    }
+
+    public int getTotalTreeDepth()
+    {
+        //make sure each node has a depth value
+        calculateDepths();
+
+        return getTotalTreeDepth(root);
+    }
+
+    //search through the tree adding up node depth values as we go
+    private int getTotalTreeDepth(Node current)
+    {
+        if (current == null)
+        {
+            return 0;
+        }
+
+        return current.depth + getTotalTreeDepth(current.left) +
+                               getTotalTreeDepth(current.right);
+    }
+
     @Override
     public Iterator<T> iterator()
     {
-        return null;
+        return new BSTIterator(root);
     }
 
     // nested classes
-    public class Node
+
+    private class BSTIterator implements Iterator<T>
+    {
+        private Stack<Node> nodeStack;
+
+        public BSTIterator(Node current)
+        {
+            nodeStack = new Stack<>();
+
+            //setup our first element to be returned
+            diveLeft(current);
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return !nodeStack.isEmpty();
+        }
+
+        @Override
+        public T next()
+        {
+            Node next = nodeStack.pop();
+
+            //if there is a right child, dive to the left while adding nodes to the stack
+            if (next.right != null)
+            {
+                Node current = next.right;
+                diveLeft(current);
+            }
+            return next.data;
+        }
+
+        private void diveLeft(Node current)
+        {
+            while (current != null)
+            {
+                nodeStack.push(current);
+                current = current.left;
+            }
+        }
+    }
+
+    private class Node
     {
         private T data;
         private Node left;
