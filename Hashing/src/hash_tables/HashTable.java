@@ -1,6 +1,8 @@
 package hash_tables;
 
-public class HashTable<T>
+import java.util.Iterator;
+
+public class HashTable<T> implements Iterable<T>
 {
     private static final int INITIAL_TABLE_SIZE = 10;
     private static final double MAX_LOAD_FACTOR = 0.6;
@@ -173,6 +175,52 @@ public class HashTable<T>
         size = 0;
         usedSpaces = 0;
         table = new HashTableElement[INITIAL_TABLE_SIZE];
+    }
+
+    @Override
+    public Iterator<T> iterator()
+    {
+        return new TableIterator(table);
+    }
+
+    private class TableIterator implements Iterator<T>
+    {
+        private HashTableElement[] table;
+        private int nextIndex = -1;
+
+        public TableIterator(HashTableElement[] table)
+        {
+            this.table = table;
+            findNext();
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return nextIndex != -1;
+        }
+
+        @Override
+        public T next()
+        {
+            Object nextElement = table[nextIndex].data;
+            findNext();
+            return (T)nextElement;
+        }
+
+        private void findNext()
+        {
+            for (int i = nextIndex + 1; i < table.length; i++)
+            {
+                if (table[i] != null && table[i].isActive)
+                {
+                    nextIndex = i;
+                    return;
+                }
+            }
+
+            nextIndex = -1;
+        }
     }
 
     private class HashTableElement<T>

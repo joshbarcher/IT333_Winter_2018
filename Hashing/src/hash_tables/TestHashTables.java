@@ -28,5 +28,15 @@ public class TestHashTables
         }
 
         numberTable.printUsedSpaces();
+
+        for (int i = 0 ; i < 1000; i++)
+        {
+            System.out.println(i + ": " + numberTable.contains(i));
+        }
+
+        for (int element : numberTable)
+        {
+            System.out.println(element);
+        }
     }
 }
