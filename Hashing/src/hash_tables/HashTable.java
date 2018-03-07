@@ -158,6 +158,23 @@ public class HashTable<T>
         return -1;
     }
 
+    public int size()
+    {
+        return size;
+    }
+
+    public boolean isEmpty()
+    {
+        return size == 0;
+    }
+
+    public void clear()
+    {
+        size = 0;
+        usedSpaces = 0;
+        table = new HashTableElement[INITIAL_TABLE_SIZE];
+    }
+
     private class HashTableElement<T>
     {
         private T data;
