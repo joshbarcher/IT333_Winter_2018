@@ -28,6 +28,11 @@ public class HashTable<T> implements Iterable<T>
         int code = element.hashCode();
         int index = code % table.length;
 
+        if (table[index] != null)
+        {
+            System.out.println("Collision!");
+        }
+
         //check for collisions
         while (table[index] != null)
         {
